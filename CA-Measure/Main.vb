@@ -3,8 +3,8 @@ Imports System.IO
 
 Public Class Main
 #If DEBUG Then
-        Public WithEvents objCa As ICa2
-      Public objProbe As IProbe2
+    Public WithEvents objCa As ICa2
+    Public objProbe As IProbe2
 #Else
     Private objCa200 As Ca200
     Private WithEvents objCa As Ca
@@ -28,10 +28,15 @@ Public Class Main
 
     Public Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         On Error GoTo Error1
+        Dim clsid As New Guid("006B0650-AF9A-4EE1-B18F-B5740004D7CE")
+        If Type.GetTypeFromCLSID(clsid).ToString() <> "System.__ComObject" Then
+            MessageBox.Show("SDK not installed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Exit Sub
+        End If
 #If DEBUG Then
         Dim T As New implementCa2
-         Dim TA As New implementProbe2
-         objCa = T
+        Dim TA As New implementProbe2
+        objCa = T
         objProbe = TA
 #Else
         objCa200 = New Ca200

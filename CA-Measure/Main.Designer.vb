@@ -44,78 +44,129 @@ Partial Class Main
         '
         'Label1
         '
-        resources.ApplyResources(Me.Label1, "Label1")
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("標楷體", 18.0!)
+        Me.Label1.Location = New System.Drawing.Point(6, 12)
         Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(58, 24)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "Lv :"
         '
         'Label2
         '
-        resources.ApplyResources(Me.Label2, "Label2")
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("標楷體", 18.0!)
+        Me.Label2.Location = New System.Drawing.Point(18, 54)
         Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(46, 24)
+        Me.Label2.TabIndex = 1
+        Me.Label2.Text = "x :"
         '
         'Label3
         '
-        resources.ApplyResources(Me.Label3, "Label3")
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("標楷體", 18.0!)
+        Me.Label3.Location = New System.Drawing.Point(18, 93)
         Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(46, 24)
+        Me.Label3.TabIndex = 2
+        Me.Label3.Text = "y :"
         '
         'LabelLv
         '
-        resources.ApplyResources(Me.LabelLv, "LabelLv")
+        Me.LabelLv.AutoSize = True
         Me.LabelLv.BackColor = System.Drawing.SystemColors.ControlLightLight
         Me.LabelLv.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LabelLv.Font = New System.Drawing.Font("新細明體", 18.0!)
+        Me.LabelLv.Location = New System.Drawing.Point(64, 12)
         Me.LabelLv.Name = "LabelLv"
+        Me.LabelLv.Size = New System.Drawing.Size(73, 26)
+        Me.LabelLv.TabIndex = 5
+        Me.LabelLv.Text = "000.00"
         '
         'Labelx
         '
-        resources.ApplyResources(Me.Labelx, "Labelx")
+        Me.Labelx.AutoSize = True
         Me.Labelx.BackColor = System.Drawing.SystemColors.ControlLightLight
         Me.Labelx.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Labelx.Font = New System.Drawing.Font("新細明體", 18.0!)
+        Me.Labelx.Location = New System.Drawing.Point(64, 54)
         Me.Labelx.Name = "Labelx"
+        Me.Labelx.Size = New System.Drawing.Size(73, 26)
+        Me.Labelx.TabIndex = 6
+        Me.Labelx.Text = "0.0000"
         '
         'Labely
         '
-        resources.ApplyResources(Me.Labely, "Labely")
+        Me.Labely.AutoSize = True
         Me.Labely.BackColor = System.Drawing.SystemColors.ControlLightLight
         Me.Labely.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Labely.Font = New System.Drawing.Font("新細明體", 18.0!)
+        Me.Labely.Location = New System.Drawing.Point(64, 93)
         Me.Labely.Name = "Labely"
+        Me.Labely.Size = New System.Drawing.Size(73, 26)
+        Me.Labely.TabIndex = 7
+        Me.Labely.Text = "0.0000"
         '
         'ButtonCancel
         '
         Me.ButtonCancel.BackColor = System.Drawing.SystemColors.Control
         Me.ButtonCancel.Cursor = System.Windows.Forms.Cursors.Default
-        resources.ApplyResources(Me.ButtonCancel, "ButtonCancel")
+        Me.ButtonCancel.Font = New System.Drawing.Font("Arial Rounded MT Bold", 24.0!)
+        Me.ButtonCancel.Location = New System.Drawing.Point(304, 65)
         Me.ButtonCancel.Name = "ButtonCancel"
+        Me.ButtonCancel.Size = New System.Drawing.Size(116, 54)
+        Me.ButtonCancel.TabIndex = 10
+        Me.ButtonCancel.Text = "Stop"
         Me.ButtonCancel.UseVisualStyleBackColor = True
         '
         'ButtonMeasure
         '
-        resources.ApplyResources(Me.ButtonMeasure, "ButtonMeasure")
+        Me.ButtonMeasure.Font = New System.Drawing.Font("Arial Rounded MT Bold", 14.25!)
+        Me.ButtonMeasure.Location = New System.Drawing.Point(170, 8)
         Me.ButtonMeasure.Name = "ButtonMeasure"
+        Me.ButtonMeasure.Size = New System.Drawing.Size(118, 52)
+        Me.ButtonMeasure.TabIndex = 11
+        Me.ButtonMeasure.Text = "CMD List" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Measure"
         Me.ButtonMeasure.UseVisualStyleBackColor = True
         '
         'ButtonCalZero
         '
         Me.ButtonCalZero.BackColor = System.Drawing.Color.Khaki
-        resources.ApplyResources(Me.ButtonCalZero, "ButtonCalZero")
+        Me.ButtonCalZero.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.ButtonCalZero.Font = New System.Drawing.Font("Arial Rounded MT Bold", 24.0!)
+        Me.ButtonCalZero.Location = New System.Drawing.Point(304, 8)
         Me.ButtonCalZero.Name = "ButtonCalZero"
+        Me.ButtonCalZero.Size = New System.Drawing.Size(116, 52)
+        Me.ButtonCalZero.TabIndex = 12
+        Me.ButtonCalZero.Text = "0-Cal"
         Me.ButtonCalZero.UseVisualStyleBackColor = False
         '
         'grdDataList
         '
         Me.grdDataList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        resources.ApplyResources(Me.grdDataList, "grdDataList")
+        Me.grdDataList.Location = New System.Drawing.Point(8, 125)
         Me.grdDataList.Name = "grdDataList"
         Me.grdDataList.RowTemplate.Height = 24
+        Me.grdDataList.Size = New System.Drawing.Size(762, 263)
+        Me.grdDataList.TabIndex = 13
         '
         'btnloadcmd
         '
-        resources.ApplyResources(Me.btnloadcmd, "btnloadcmd")
+        Me.btnloadcmd.Location = New System.Drawing.Point(673, 94)
         Me.btnloadcmd.Name = "btnloadcmd"
+        Me.btnloadcmd.Size = New System.Drawing.Size(97, 28)
+        Me.btnloadcmd.TabIndex = 14
+        Me.btnloadcmd.Text = "Load CMD list"
         Me.btnloadcmd.UseVisualStyleBackColor = True
         '
         'cmdDataSave
         '
-        resources.ApplyResources(Me.cmdDataSave, "cmdDataSave")
+        Me.cmdDataSave.Location = New System.Drawing.Point(673, 394)
         Me.cmdDataSave.Name = "cmdDataSave"
+        Me.cmdDataSave.Size = New System.Drawing.Size(97, 28)
+        Me.cmdDataSave.TabIndex = 15
+        Me.cmdDataSave.Text = "Save Data"
         Me.cmdDataSave.UseVisualStyleBackColor = True
         '
         'GroupBox1
@@ -127,61 +178,93 @@ Partial Class Main
         Me.GroupBox1.Controls.Add(Me.testserial)
         Me.GroupBox1.Controls.Add(Me.Label4)
         Me.GroupBox1.Controls.Add(Me.comportdrp)
-        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
+        Me.GroupBox1.Location = New System.Drawing.Point(426, 8)
         Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(344, 79)
+        Me.GroupBox1.TabIndex = 16
         Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "COM Control"
         '
         'Label5
         '
-        resources.ApplyResources(Me.Label5, "Label5")
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("新細明體", 12.0!)
+        Me.Label5.Location = New System.Drawing.Point(6, 53)
         Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(81, 16)
+        Me.Label5.TabIndex = 6
+        Me.Label5.Text = "Command :"
         '
         'remotecmd
         '
-        resources.ApplyResources(Me.remotecmd, "remotecmd")
+        Me.remotecmd.Font = New System.Drawing.Font("新細明體", 9.0!)
+        Me.remotecmd.Location = New System.Drawing.Point(91, 50)
         Me.remotecmd.Name = "remotecmd"
+        Me.remotecmd.Size = New System.Drawing.Size(166, 22)
+        Me.remotecmd.TabIndex = 5
         '
         'runremotecmd
         '
-        resources.ApplyResources(Me.runremotecmd, "runremotecmd")
+        Me.runremotecmd.Location = New System.Drawing.Point(263, 50)
         Me.runremotecmd.Name = "runremotecmd"
+        Me.runremotecmd.Size = New System.Drawing.Size(75, 23)
+        Me.runremotecmd.TabIndex = 4
+        Me.runremotecmd.Text = "Run"
         Me.runremotecmd.UseVisualStyleBackColor = True
         '
         'detectSerial
         '
-        resources.ApplyResources(Me.detectSerial, "detectSerial")
+        Me.detectSerial.Location = New System.Drawing.Point(182, 21)
         Me.detectSerial.Name = "detectSerial"
+        Me.detectSerial.Size = New System.Drawing.Size(75, 21)
+        Me.detectSerial.TabIndex = 3
+        Me.detectSerial.Text = "ReDetect"
         Me.detectSerial.UseVisualStyleBackColor = True
         '
         'testserial
         '
-        resources.ApplyResources(Me.testserial, "testserial")
+        Me.testserial.Location = New System.Drawing.Point(263, 21)
         Me.testserial.Name = "testserial"
+        Me.testserial.Size = New System.Drawing.Size(75, 21)
+        Me.testserial.TabIndex = 2
+        Me.testserial.Text = "Test"
         Me.testserial.UseVisualStyleBackColor = True
         '
         'Label4
         '
-        resources.ApplyResources(Me.Label4, "Label4")
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("新細明體", 12.0!)
+        Me.Label4.Location = New System.Drawing.Point(8, 22)
         Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(79, 16)
+        Me.Label4.TabIndex = 1
+        Me.Label4.Text = "COM Port :"
         '
         'comportdrp
         '
         Me.comportdrp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.comportdrp.FormattingEnabled = True
-        resources.ApplyResources(Me.comportdrp, "comportdrp")
+        Me.comportdrp.Location = New System.Drawing.Point(91, 22)
         Me.comportdrp.Name = "comportdrp"
+        Me.comportdrp.Size = New System.Drawing.Size(85, 20)
+        Me.comportdrp.TabIndex = 0
         '
         'ButtonSingleMeasure
         '
-        resources.ApplyResources(Me.ButtonSingleMeasure, "ButtonSingleMeasure")
+        Me.ButtonSingleMeasure.Font = New System.Drawing.Font("Arial Rounded MT Bold", 14.25!)
+        Me.ButtonSingleMeasure.Location = New System.Drawing.Point(170, 66)
         Me.ButtonSingleMeasure.Name = "ButtonSingleMeasure"
+        Me.ButtonSingleMeasure.Size = New System.Drawing.Size(118, 53)
+        Me.ButtonSingleMeasure.TabIndex = 17
+        Me.ButtonSingleMeasure.Text = "Single" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Measure"
         Me.ButtonSingleMeasure.UseVisualStyleBackColor = True
         '
         'Main
         '
-        resources.ApplyResources(Me, "$this")
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange
+        Me.ClientSize = New System.Drawing.Size(778, 430)
         Me.Controls.Add(Me.ButtonSingleMeasure)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.cmdDataSave)
@@ -197,9 +280,11 @@ Partial Class Main
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Main"
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
+        Me.Text = "CA-Measure"
         CType(Me.grdDataList, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
