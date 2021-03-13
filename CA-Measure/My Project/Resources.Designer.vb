@@ -59,15 +59,5 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
-        
-        '''<summary>
-        '''  查詢類似 (圖示) 的類型 System.Drawing.Icon 當地語系化資源。
-        '''</summary>
-        Friend ReadOnly Property icon1() As System.Drawing.Icon
-            Get
-                Dim obj As Object = ResourceManager.GetObject("icon1", resourceCulture)
-                Return CType(obj,System.Drawing.Icon)
-            End Get
-        End Property
     End Module
 End Namespace
