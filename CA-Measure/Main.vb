@@ -28,11 +28,6 @@ Public Class Main
 
     Public Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         On Error GoTo Error1
-        Dim clsid As New Guid("006B0650-AF9A-4EE1-B18F-B5740004D7CE")
-        If Type.GetTypeFromCLSID(clsid).ToString() <> "System.__ComObject" Then
-            MessageBox.Show("SDK not installed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Exit Sub
-        End If
 #If DEBUG Then
         Dim T As New implementCa2
         Dim TA As New implementProbe2
@@ -48,10 +43,7 @@ Public Class Main
         ButtonMeasure.Enabled = True
         ButtonCalZero.Enabled = True
         GridInit()
-#If DEBUG Then
-#Else
         GetSerialPortNames()
-#End If
         Exit Sub
 
 Error1:
@@ -343,13 +335,11 @@ Error2:
     End Sub
 
     Private Sub SaveData()
-
         Dim dd(600, 600) As String
         Dim i, j As Short
         Dim fm, fname As String
         Dim fnum As Short
 
-        'For i = 0 To ListNo - 2
         For i = 0 To grdDataList.RowCount - 1
             For j = 0 To 13
                 If IsDBNull(grdDataList(j, i).Value) = False Then
@@ -359,15 +349,11 @@ Error2:
                 End If
             Next j
         Next i
-
         On Error Resume Next
 
         cmdDiagSave.FileName = ""
-
         cmdDiagSave.Filter = "Data Files (*.csv)|*.csv"
-        ' Specify default filter
         cmdDiagSave.FilterIndex = 2
-        ' display the File Open dialog
 
         If cmdDiagSave.ShowDialog() = Windows.Forms.DialogResult.Cancel Then
             Exit Sub
@@ -377,18 +363,10 @@ Error2:
         End If
 
         fname = Dir(fm, vbNormal OrElse FileAttribute.ReadOnly)
-        'If fname <> "" Then
-        '        If MsgBox(fname & " Overwrite. OK ?", MsgBoxStyle.OkCancel) = MsgBoxResult.Cancel Then Exit Sub
-        '        Else
-        'End If
-
         fnum = FreeFile()
         FileOpen(fnum, fm, OpenMode.Output, OpenAccess.Write, OpenShare.Shared)
         Dim csvDelimiter As String
         csvDelimiter = ","
-
-        ' 021224
-        ' Write #fnum, "No.", "X", "Y", "Z", "x", "y", "Lv", "ud", "vd", "T", "duv", "Date", "Time"
         Print(fnum, "No" & csvDelimiter)
         Print(fnum, "X" & csvDelimiter)
         Print(fnum, "Y" & csvDelimiter)
@@ -409,7 +387,6 @@ Error2:
             Next j
             PrintLine(fnum, dd(i, 13))
         Next i
-
         FileClose(fnum)
     End Sub
 
