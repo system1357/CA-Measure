@@ -3,7 +3,7 @@ CA-Measure is a Konica Minolta CA-100Plus/CA-210/CA-310 color analyzer remote me
 
 ### Usage Notes
 
-1. Install CA-SDK from Konica Minolta first, you can get it [here](https://www.konicaminolta.com/instruments/download/software/display/ca-sdk/index.html)
+1. Install x64 version of CA-SDK from Konica Minolta first, you can get it [here](https://www.konicaminolta.com/instruments/download/software/display/ca-sdk/index.html)
 2. Load command list before batch measuring, you can save a template list by pressing "Save Data" first and add commands to the cmd column
 
 ### Known Issues
