@@ -7,22 +7,22 @@ Public Class Main
     Public objProbe As IProbe2
 #Else
     Private objCa200 As Ca200
-    Private WithEvents objCa As Ca
+    Private WithEvents ObjCa As Ca
     Private objProbe As Probe
 #End If
     Private isMsr As Boolean
-    Dim ListNo As Short
+    Private ListNo As Short
     Public Const FORMAT_SXY As String = "0.0000"
     Public Const FORMAT_LV As String = "0.0###"
-    Dim objDataset1 As New DataTable
+    Private objDataset1 As New DataTable
 
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        objCa.RemoteMode = 0
+        ObjCa.RemoteMode = 0
 #If DEBUG Then
 #Else
         objCa200 = Nothing
 #End If
-        objCa = Nothing
+        ObjCa = Nothing
         objProbe = Nothing
     End Sub
 
@@ -36,8 +36,8 @@ Public Class Main
 #Else
         objCa200 = New Ca200
         objCa200.AutoConnect()
-        objCa = objCa200.SingleCa
-        objProbe = objCa.SingleProbe
+        ObjCa = objCa200.SingleCa
+        objProbe = ObjCa.SingleProbe
 #End If
         ButtonCancel.Enabled = False
         ButtonMeasure.Enabled = True
@@ -60,7 +60,7 @@ Error1:
         MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
     End Sub
 
-    Sub GetSerialPortNames()
+    Public Sub GetSerialPortNames()
         For Each sp As String In IO.Ports.SerialPort.GetPortNames
             comportdrp.Items.Add(sp)
         Next
@@ -69,14 +69,14 @@ Error1:
         End If
     End Sub
 
-    Sub TestSerialData()
-        Using com1 As IO.Ports.SerialPort =
-            My.Computer.Ports.OpenSerialPort(comportdrp.SelectedItem.ToString())
-            com1.WriteLine("echo Test")
+    Public Sub TestSerialData()
+        Using com1 As Ports.SerialPort =
+            My.Computer.Ports.OpenSerialPort(comportdrp.SelectedItem.ToString(), baud.Text, IO.Ports.Parity.None, 8, 1)
+            com1.Write("echo Test" & Chr(10))
             Try
                 com1.ReadTimeout = 5000
                 Do
-                    Dim Incoming As String = com1.ReadLine()
+                    Dim Incoming As String = com1.ReadChar()
                     If Incoming Is Nothing Then
                         Exit Do
                     Else
@@ -95,16 +95,15 @@ Error1:
         End Using
     End Sub
 
-    Sub SendSerialData(ByVal data As String)
-        Using com1 As IO.Ports.SerialPort =
-        My.Computer.Ports.OpenSerialPort(comportdrp.SelectedItem.ToString())
+    Public Sub SendSerialData(data As String)
+        Using com1 As Ports.SerialPort =
+        My.Computer.Ports.OpenSerialPort(comportdrp.SelectedItem.ToString(), baud.Text, IO.Ports.Parity.None, 8, 1)
             Try
-                com1.WriteLine(data)
+                com1.Write(data & Chr(10))
             Catch ex As TimeoutException
                 MessageBox.Show("Error: Serial Port write timeout.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Finally
                 If com1 IsNot Nothing Then com1.Close()
-                MessageBox.Show("Command write success!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End Try
 
         End Using
@@ -183,7 +182,7 @@ Error1:
         objDataset1.Columns.Add("cmd")
 
         i = 0
-        For Each dgvc As Windows.Forms.DataGridViewColumn In grdDataList.Columns
+        For Each dgvc As DataGridViewColumn In grdDataList.Columns
             If i = 0 Then
                 dgvc.DefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240)
             Else
@@ -201,6 +200,8 @@ Error1:
         grdDataList.AllowUserToDeleteRows = True
         grdDataList.AutoGenerateColumns = False
         grdDataList.Columns(13).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+        TimeoutSec.Text = 2000
+        baud.Text = 9600
     End Sub
 
     Private Sub ButtonCancel_Click(sender As Object, e As EventArgs) Handles ButtonCancel.Click
@@ -220,7 +221,7 @@ Error1:
         btnloadcmd.Enabled = False
         cmdDataSave.Enabled = False
 
-        objCa.Measure()
+        ObjCa.Measure()
         LabelLv.Text = objProbe.Lv.ToString("##0.00")
         Labelx.Text = objProbe.sx.ToString("0.0000")
         Labely.Text = objProbe.sy.ToString("0.0000")
@@ -247,12 +248,12 @@ Error2:
             ButtonCalZero.Enabled = False
             ButtonSingleMeasure.Enabled = False
             Try
-                objCa.CalZero()
+                ObjCa.CalZero()
                 calzero_success = True
             Catch er As Exception
                 DisplayError()
                 If MessageBox.Show("Zero Cal Error" + vbCrLf + "Retry?", "CalZero", MessageBoxButtons.OKCancel) = DialogResult.Cancel Then
-                    objCa.RemoteMode = 0
+                    ObjCa.RemoteMode = 0
                     End
                 End If
             End Try
@@ -264,7 +265,7 @@ Error2:
 
     End Sub
 
-    Private Sub objCa200_ExeCalZero() Handles objCa.ExeCalZero
+    Private Sub ObjCa200_ExeCalZero() Handles ObjCa.ExeCalZero
         If MessageBox.Show("CalZero?", "CalZero", MessageBoxButtons.OKCancel) = DialogResult.Cancel Then
             Exit Sub
         End If
@@ -272,7 +273,7 @@ Error2:
         ButtonCalZero.Enabled = False
 
         Try
-            objCa.CalZero()
+            ObjCa.CalZero()
         Catch er As Exception
             DisplayError()
         End Try
@@ -309,7 +310,7 @@ Error2:
         grdDataList.Refresh()
     End Sub
 
-    Private Sub SetCMDData(ByVal LisNo As Integer)
+    Private Sub SetCMDData(LisNo As Integer)
         objDataset1.Rows(LisNo)(1) = objProbe.X.ToString("0.00")
         objDataset1.Rows(LisNo)(2) = objProbe.Y.ToString("0.00")
         objDataset1.Rows(LisNo)(3) = objProbe.Z.ToString("0.00")
@@ -390,7 +391,7 @@ Error2:
         FileClose(fnum)
     End Sub
 
-    Private Sub loadData()
+    Private Sub LoadData()
         cmdopen.Filter = "Data Files (*.csv)|*.csv"
         cmdopen.FilterIndex = 2
         cmdopen.RestoreDirectory = True
@@ -414,7 +415,7 @@ Error2:
         End If
     End Sub
 
-    Private Sub grdDataList_CellMouseClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles grdDataList.CellMouseClick
+    Private Sub GrdDataList_CellMouseClick(sender As System.Object, e As DataGridViewCellMouseEventArgs) Handles grdDataList.CellMouseClick
         If e.RowIndex >= 0 Then
             Dim row As DataGridViewRow = grdDataList.Rows(e.RowIndex)
             LabelLv.Text = row.Cells(6).Value
@@ -423,30 +424,31 @@ Error2:
         End If
     End Sub
 
-    Private Sub cmdDataSave_Click(sender As Object, e As EventArgs) Handles cmdDataSave.Click
+    Private Sub CmdDataSave_Click(sender As Object, e As EventArgs) Handles cmdDataSave.Click
         SaveData()
     End Sub
 
-    Private Sub btnloadcmd_Click(sender As Object, e As EventArgs) Handles btnloadcmd.Click
-        loadData()
+    Private Sub Btnloadcmd_Click(sender As Object, e As EventArgs) Handles btnloadcmd.Click
+        LoadData()
     End Sub
 
-    Private Sub testserial_Click(sender As Object, e As EventArgs) Handles testserial.Click
+    Private Sub Testserial_Click(sender As Object, e As EventArgs) Handles testserial.Click
         If comportdrp.Items.Count <> 0 Then
             Cursor.Current = Cursors.WaitCursor
             TestSerialData()
         End If
     End Sub
 
-    Private Sub detectSerial_Click(sender As Object, e As EventArgs) Handles detectSerial.Click
+    Private Sub DetectSerial_Click(sender As Object, e As EventArgs) Handles detectSerial.Click
         comportdrp.Items.Clear()
         comportdrp.Text = ""
         GetSerialPortNames()
     End Sub
 
-    Private Sub runremotecmd_Click(sender As Object, e As EventArgs) Handles runremotecmd.Click
+    Private Sub Runremotecmd_Click(sender As Object, e As EventArgs) Handles runremotecmd.Click
         If comportdrp.Items.Count <> 0 Then
             SendSerialData(remotecmd.Text)
+            MessageBox.Show("Command write success!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
     End Sub
 
@@ -464,8 +466,8 @@ Error2:
                 cmdDataSave.Enabled = False
                 For i = 0 To objDataset1.Rows.Count - 1
                     SendSerialData(objDataset1.Rows(i)(13).ToString)
-                    System.Threading.Thread.Sleep(2000)
-                    objCa.Measure()
+                    System.Threading.Thread.Sleep(TimeoutSec.Text)
+                    ObjCa.Measure()
                     LabelLv.Text = objProbe.Lv.ToString("##0.00")
                     Labelx.Text = objProbe.sx.ToString("0.0000")
                     Labely.Text = objProbe.sy.ToString("0.0000")
@@ -497,7 +499,7 @@ Error2:
         End
     End Sub
 
-    Sub grdDataList_UserDeletedRow(sender As Object, e As DataGridViewRowEventArgs) Handles grdDataList.UserDeletedRow
+    Public Sub GrdDataList_UserDeletedRow(sender As Object, e As DataGridViewRowEventArgs) Handles grdDataList.UserDeletedRow
         objDataset1.AcceptChanges()
     End Sub
 

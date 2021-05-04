@@ -30,6 +30,9 @@ Partial Class Main
         Me.cmdDiagSave = New System.Windows.Forms.SaveFileDialog()
         Me.cmdDataSave = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.TimeoutSec = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.remotecmd = New System.Windows.Forms.TextBox()
         Me.runremotecmd = New System.Windows.Forms.Button()
@@ -38,6 +41,8 @@ Partial Class Main
         Me.Label4 = New System.Windows.Forms.Label()
         Me.comportdrp = New System.Windows.Forms.ComboBox()
         Me.ButtonSingleMeasure = New System.Windows.Forms.Button()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.baud = New System.Windows.Forms.TextBox()
         CType(Me.grdDataList, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
@@ -145,7 +150,7 @@ Partial Class Main
         'grdDataList
         '
         Me.grdDataList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.grdDataList.Location = New System.Drawing.Point(8, 125)
+        Me.grdDataList.Location = New System.Drawing.Point(12, 125)
         Me.grdDataList.Name = "grdDataList"
         Me.grdDataList.RowTemplate.Height = 24
         Me.grdDataList.Size = New System.Drawing.Size(762, 263)
@@ -153,7 +158,7 @@ Partial Class Main
         '
         'btnloadcmd
         '
-        Me.btnloadcmd.Location = New System.Drawing.Point(673, 94)
+        Me.btnloadcmd.Location = New System.Drawing.Point(553, 394)
         Me.btnloadcmd.Name = "btnloadcmd"
         Me.btnloadcmd.Size = New System.Drawing.Size(97, 28)
         Me.btnloadcmd.TabIndex = 14
@@ -171,6 +176,11 @@ Partial Class Main
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.Label9)
+        Me.GroupBox1.Controls.Add(Me.baud)
+        Me.GroupBox1.Controls.Add(Me.Label7)
+        Me.GroupBox1.Controls.Add(Me.Label6)
+        Me.GroupBox1.Controls.Add(Me.TimeoutSec)
         Me.GroupBox1.Controls.Add(Me.Label5)
         Me.GroupBox1.Controls.Add(Me.remotecmd)
         Me.GroupBox1.Controls.Add(Me.runremotecmd)
@@ -180,16 +190,45 @@ Partial Class Main
         Me.GroupBox1.Controls.Add(Me.comportdrp)
         Me.GroupBox1.Location = New System.Drawing.Point(426, 8)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(344, 79)
+        Me.GroupBox1.Size = New System.Drawing.Size(344, 109)
         Me.GroupBox1.TabIndex = 16
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "COM Control"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("新細明體", 12.0!)
+        Me.Label7.Location = New System.Drawing.Point(312, 85)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(26, 16)
+        Me.Label7.TabIndex = 20
+        Me.Label7.Text = "ms"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("新細明體", 12.0!)
+        Me.Label6.Location = New System.Drawing.Point(195, 83)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(53, 16)
+        Me.Label6.TabIndex = 19
+        Me.Label6.Text = "Delay :"
+        '
+        'TimeoutSec
+        '
+        Me.TimeoutSec.Font = New System.Drawing.Font("新細明體", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.TimeoutSec.Location = New System.Drawing.Point(254, 81)
+        Me.TimeoutSec.MaxLength = 10
+        Me.TimeoutSec.Name = "TimeoutSec"
+        Me.TimeoutSec.Size = New System.Drawing.Size(52, 22)
+        Me.TimeoutSec.TabIndex = 18
         '
         'Label5
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("新細明體", 12.0!)
-        Me.Label5.Location = New System.Drawing.Point(6, 53)
+        Me.Label5.Location = New System.Drawing.Point(4, 52)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(81, 16)
         Me.Label5.TabIndex = 6
@@ -234,7 +273,7 @@ Partial Class Main
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("新細明體", 12.0!)
-        Me.Label4.Location = New System.Drawing.Point(8, 22)
+        Me.Label4.Location = New System.Drawing.Point(6, 22)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(79, 16)
         Me.Label4.TabIndex = 1
@@ -258,6 +297,25 @@ Partial Class Main
         Me.ButtonSingleMeasure.TabIndex = 17
         Me.ButtonSingleMeasure.Text = "Single" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Measure"
         Me.ButtonSingleMeasure.UseVisualStyleBackColor = True
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("新細明體", 12.0!)
+        Me.Label9.Location = New System.Drawing.Point(36, 83)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(49, 16)
+        Me.Label9.TabIndex = 22
+        Me.Label9.Text = "Baud :"
+        '
+        'baud
+        '
+        Me.baud.Font = New System.Drawing.Font("新細明體", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.baud.Location = New System.Drawing.Point(91, 81)
+        Me.baud.MaxLength = 10
+        Me.baud.Name = "baud"
+        Me.baud.Size = New System.Drawing.Size(85, 22)
+        Me.baud.TabIndex = 21
         '
         'Main
         '
@@ -315,4 +373,9 @@ Partial Class Main
     Friend WithEvents remotecmd As TextBox
     Friend WithEvents runremotecmd As Button
     Friend WithEvents ButtonSingleMeasure As Button
+    Friend WithEvents Label7 As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents TimeoutSec As TextBox
+    Friend WithEvents Label9 As Label
+    Friend WithEvents baud As TextBox
 End Class
