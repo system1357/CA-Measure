@@ -73,6 +73,7 @@ Error1:
     End Sub
 
     Public Sub TestSerialData()
+        comname = comportdrp.SelectedItem.ToString()
         Using com1 As Ports.SerialPort =
         My.Computer.Ports.OpenSerialPort(comname, baud.Text, IO.Ports.Parity.None, 8, 1)
             com1.NewLine = Chr(10)
@@ -100,6 +101,7 @@ Error1:
     End Sub
 
     Public Sub SendSerialData(data As String)
+        comname = comportdrp.SelectedItem.ToString()
         Using com1 As Ports.SerialPort =
         My.Computer.Ports.OpenSerialPort(comname, baud.Text, IO.Ports.Parity.None, 8, 1)
             Try
