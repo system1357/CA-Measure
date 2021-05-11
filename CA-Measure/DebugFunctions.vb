@@ -25,7 +25,7 @@ Public Class implementCa2
         MessageBox.Show("Zero Cal Success")
     End Sub
     Public Sub Measure() Implements ICa2.Measure
-        MessageBox.Show("Measure Success")
+
     End Sub
     Event ExeCalZero() Implements ICa2.ExeCalZero
     Property SingleProbe As Object Implements ICa2.SingleProbe

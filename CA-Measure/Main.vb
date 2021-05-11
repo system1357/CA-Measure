@@ -14,6 +14,8 @@ Public Class Main
     Private ListNo As Short
     Public Const FORMAT_SXY As String = "0.0000"
     Public Const FORMAT_LV As String = "0.0###"
+    Public comname As String
+    Public FORMAT_Count As Integer
     Private objDataset1 As New DataTable
 
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -66,17 +68,19 @@ Error1:
         Next
         If comportdrp.Items.Count <> 0 Then
             comportdrp.SelectedIndex = 0
+            comname = comportdrp.SelectedItem.ToString()
         End If
     End Sub
 
     Public Sub TestSerialData()
         Using com1 As Ports.SerialPort =
-            My.Computer.Ports.OpenSerialPort(comportdrp.SelectedItem.ToString(), baud.Text, IO.Ports.Parity.None, 8, 1)
-            com1.Write("echo Test" & Chr(10))
+        My.Computer.Ports.OpenSerialPort(comname, baud.Text, IO.Ports.Parity.None, 8, 1)
+            com1.NewLine = Chr(10)
+            com1.WriteLine("echo Test")
             Try
                 com1.ReadTimeout = 5000
                 Do
-                    Dim Incoming As String = com1.ReadChar()
+                    Dim Incoming As String = com1.ReadLine()
                     If Incoming Is Nothing Then
                         Exit Do
                     Else
@@ -97,7 +101,7 @@ Error1:
 
     Public Sub SendSerialData(data As String)
         Using com1 As Ports.SerialPort =
-        My.Computer.Ports.OpenSerialPort(comportdrp.SelectedItem.ToString(), baud.Text, IO.Ports.Parity.None, 8, 1)
+        My.Computer.Ports.OpenSerialPort(comname, baud.Text, IO.Ports.Parity.None, 8, 1)
             Try
                 com1.Write(data & Chr(10))
             Catch ex As TimeoutException
@@ -202,6 +206,12 @@ Error1:
         grdDataList.Columns(13).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         TimeoutSec.Text = 2000
         baud.Text = 9600
+        linecounter.Text = 0
+        lineall.Text = 0
+        ProgressBar1.Value = 0
+        ProgressBar1.Minimum = 0
+        ProgressBar1.Maximum = objDataset1.Rows.Count
+        ProgressBar1.Step = 1
     End Sub
 
     Private Sub ButtonCancel_Click(sender As Object, e As EventArgs) Handles ButtonCancel.Click
@@ -223,8 +233,6 @@ Error1:
 
         ObjCa.Measure()
         LabelLv.Text = objProbe.Lv.ToString("##0.00")
-        Labelx.Text = objProbe.sx.ToString("0.0000")
-        Labely.Text = objProbe.sy.ToString("0.0000")
         SetSingleData()
         Application.DoEvents()
         ButtonCancel.Enabled = False
@@ -232,6 +240,7 @@ Error1:
         ButtonCalZero.Enabled = True
         btnloadcmd.Enabled = True
         cmdDataSave.Enabled = True
+        lineall.Text = grdDataList.RowCount.ToString()
         Exit Sub
 
 Error2:
@@ -336,7 +345,7 @@ Error2:
     End Sub
 
     Private Sub SaveData()
-        Dim dd(600, 600) As String
+        Dim dd(999999, 20) As String
         Dim i, j As Short
         Dim fm, fname As String
         Dim fnum As Short
@@ -410,7 +419,12 @@ Error2:
                 grdDataList.DataSource = objDataset1.DefaultView
                 objConn.Close()
             Finally
-
+                lineall.Text = 0
+                lineall.Text = grdDataList.RowCount.ToString()
+                FORMAT_Count = 0
+                linecounter.Text = FORMAT_Count.ToString()
+                ProgressBar1.Value = 0
+                ProgressBar1.Maximum = objDataset1.Rows.Count
             End Try
         End If
     End Sub
@@ -419,8 +433,6 @@ Error2:
         If e.RowIndex >= 0 Then
             Dim row As DataGridViewRow = grdDataList.Rows(e.RowIndex)
             LabelLv.Text = row.Cells(6).Value
-            Labelx.Text = row.Cells(4).Value
-            Labely.Text = row.Cells(5).Value
         End If
     End Sub
 
@@ -436,6 +448,8 @@ Error2:
         If comportdrp.Items.Count <> 0 Then
             Cursor.Current = Cursors.WaitCursor
             TestSerialData()
+        Else
+            MessageBox.Show("No COM Port defined !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
 
@@ -449,14 +463,16 @@ Error2:
         If comportdrp.Items.Count <> 0 Then
             SendSerialData(remotecmd.Text)
             MessageBox.Show("Command write success!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+            MessageBox.Show("No COM Port defined !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
 
-    Private Sub ButtonMeasure_Click(sender As Object, e As EventArgs) Handles ButtonMeasure.Click
-        On Error GoTo Error2
-        Dim i As Integer
+    Private Async Sub ButtonMeasure_Click(sender As Object, e As EventArgs) Handles ButtonMeasure.Click
         If comportdrp.Items.Count <> 0 Then
             If objDataset1.Rows.Count <> 0 Then
+                ProgressBar1.Value = 0
+                FORMAT_Count = 0
                 isMsr = True
                 ButtonCancel.Enabled = True
                 ButtonMeasure.Enabled = False
@@ -464,19 +480,27 @@ Error2:
                 ButtonCalZero.Enabled = False
                 btnloadcmd.Enabled = False
                 cmdDataSave.Enabled = False
-                For i = 0 To objDataset1.Rows.Count - 1
-                    SendSerialData(objDataset1.Rows(i)(13).ToString)
-                    System.Threading.Thread.Sleep(TimeoutSec.Text)
-                    ObjCa.Measure()
-                    LabelLv.Text = objProbe.Lv.ToString("##0.00")
-                    Labelx.Text = objProbe.sx.ToString("0.0000")
-                    Labely.Text = objProbe.sy.ToString("0.0000")
-                    SetCMDData(i)
-                    Application.DoEvents()
-                    If isMsr = False Then
-                        Exit For
-                    End If
-                Next
+                Await Task.Run(Sub()
+                                   Dim i As Integer
+                                   Try
+                                       For i = 0 To objDataset1.Rows.Count - 1
+                                           Me.Invoke(Sub() ProgressBar1.PerformStep())
+                                           SendSerialData(objDataset1.Rows(i)(13).ToString)
+                                           System.Threading.Thread.Sleep(TimeoutSec.Text)
+                                           objCa.Measure()
+                                           FORMAT_Count += 1
+                                           Me.Invoke(Sub() linecounter.Text = FORMAT_Count.ToString())
+                                           Me.Invoke(Sub() LabelLv.Text = objProbe.Lv.ToString("##0.00"))
+                                           Me.Invoke(Sub() SetCMDData(i))
+                                           Application.DoEvents()
+                                           If isMsr = False Then
+                                               Exit For
+                                           End If
+                                       Next
+                                   Catch ex As Exception
+                                       DisplayError()
+                                   End Try
+                               End Sub)
                 ButtonCancel.Enabled = False
                 ButtonMeasure.Enabled = True
                 ButtonSingleMeasure.Enabled = True
@@ -492,15 +516,11 @@ Error2:
             MessageBox.Show("No COM Port defined !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End If
-
-
-Error2:
-        DisplayError()
-        End
     End Sub
 
     Public Sub GrdDataList_UserDeletedRow(sender As Object, e As DataGridViewRowEventArgs) Handles grdDataList.UserDeletedRow
         objDataset1.AcceptChanges()
     End Sub
+
 
 End Class
