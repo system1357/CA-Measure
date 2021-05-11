@@ -72,8 +72,11 @@ Error1:
         End If
     End Sub
 
-    Public Sub TestSerialData()
+    Public Sub ComSelectChange(sender As Object, e As EventArgs) Handles comportdrp.SelectedIndexChanged
         comname = comportdrp.SelectedItem.ToString()
+    End Sub
+
+    Public Sub TestSerialData()
         Using com1 As Ports.SerialPort =
         My.Computer.Ports.OpenSerialPort(comname, baud.Text, IO.Ports.Parity.None, 8, 1)
             com1.NewLine = Chr(10)
@@ -101,7 +104,6 @@ Error1:
     End Sub
 
     Public Sub SendSerialData(data As String)
-        comname = comportdrp.SelectedItem.ToString()
         Using com1 As Ports.SerialPort =
         My.Computer.Ports.OpenSerialPort(comname, baud.Text, IO.Ports.Parity.None, 8, 1)
             Try
@@ -486,7 +488,7 @@ Error2:
                                    Dim i As Integer
                                    Try
                                        For i = 0 To objDataset1.Rows.Count - 1
-                                           Me.Invoke(Sub() ProgressBar1.PerformStep())
+                                           Me.BeginInvoke(Sub() ProgressBar1.PerformStep())
                                            SendSerialData(objDataset1.Rows(i)(13).ToString)
                                            System.Threading.Thread.Sleep(TimeoutSec.Text)
                                            objCa.Measure()
