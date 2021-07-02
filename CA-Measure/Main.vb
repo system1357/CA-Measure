@@ -237,7 +237,8 @@ Error1:
 
         ObjCa.Measure()
         LabelLv.Text = objProbe.Lv.ToString("##0.00")
-        SetSingleData()
+        objDataset1.Rows.Add()
+        SetData(objDataset1.Rows.Count - 1)
         Application.DoEvents()
         ButtonCancel.Enabled = False
         ButtonMeasure.Enabled = True
@@ -296,9 +297,7 @@ Error2:
 
     End Sub
 
-    Private Sub SetSingleData()
-        Dim LisNo = objDataset1.Rows.Count
-        objDataset1.Rows.Add()
+    Private Sub SetData(LisNo As Integer)
         objDataset1.Rows(LisNo)(1) = objProbe.X.ToString("0.00")
         objDataset1.Rows(LisNo)(2) = objProbe.Y.ToString("0.00")
         objDataset1.Rows(LisNo)(3) = objProbe.Z.ToString("0.00")
@@ -323,32 +322,14 @@ Error2:
         grdDataList.Refresh()
     End Sub
 
-    Private Sub SetCMDData(LisNo As Integer)
-        objDataset1.Rows(LisNo)(1) = objProbe.X.ToString("0.00")
-        objDataset1.Rows(LisNo)(2) = objProbe.Y.ToString("0.00")
-        objDataset1.Rows(LisNo)(3) = objProbe.Z.ToString("0.00")
-        objDataset1.Rows(LisNo)(4) = objProbe.sx.ToString(FORMAT_SXY)
-        objDataset1.Rows(LisNo)(5) = objProbe.sy.ToString(FORMAT_SXY)
-        objDataset1.Rows(LisNo)(6) = objProbe.Lv.ToString(FORMAT_LV)
-        objDataset1.Rows(LisNo)(7) = objProbe.ud.ToString(FORMAT_SXY)
-        objDataset1.Rows(LisNo)(8) = objProbe.vd.ToString(FORMAT_SXY)
-        If objProbe.T = -1 Then
-            objDataset1.Rows(LisNo)(9) = "-"
-        Else
-            objDataset1.Rows(LisNo)(9) = objProbe.T.ToString("00000")
+    Private Sub GrdDataList_CellMouseClick(sender As System.Object, e As DataGridViewCellMouseEventArgs) Handles grdDataList.CellMouseClick
+        If e.RowIndex >= 0 Then
+            Dim row As DataGridViewRow = grdDataList.Rows(e.RowIndex)
+            LabelLv.Text = row.Cells(6).Value
         End If
-        If objProbe.T = -1 Then
-            objDataset1.Rows(LisNo)(10) = "-"
-        Else
-            objDataset1.Rows(LisNo)(10) = objProbe.duv.ToString("+.000;-.000")
-        End If
-        objDataset1.Rows(LisNo)(11) = Today.ToString("yyyy/MM/dd")
-        objDataset1.Rows(LisNo)(12) = TimeOfDay.ToString("HH:mm:ss")
-        grdDataList.DataSource = objDataset1.DefaultView
-        grdDataList.Refresh()
     End Sub
 
-    Private Sub SaveData()
+    Private Sub CmdDataSave_Click(sender As Object, e As EventArgs) Handles cmdDataSave.Click
         Dim dd(999999, 20) As String
         Dim i, j As Short
         Dim fm, fname As String
@@ -404,7 +385,7 @@ Error2:
         FileClose(fnum)
     End Sub
 
-    Private Sub LoadData()
+    Private Sub Btnloadcmd_Click(sender As Object, e As EventArgs) Handles btnloadcmd.Click
         cmdopen.Filter = "Data Files (*.csv)|*.csv"
         cmdopen.FilterIndex = 2
         cmdopen.RestoreDirectory = True
@@ -431,21 +412,6 @@ Error2:
                 ProgressBar1.Maximum = objDataset1.Rows.Count
             End Try
         End If
-    End Sub
-
-    Private Sub GrdDataList_CellMouseClick(sender As System.Object, e As DataGridViewCellMouseEventArgs) Handles grdDataList.CellMouseClick
-        If e.RowIndex >= 0 Then
-            Dim row As DataGridViewRow = grdDataList.Rows(e.RowIndex)
-            LabelLv.Text = row.Cells(6).Value
-        End If
-    End Sub
-
-    Private Sub CmdDataSave_Click(sender As Object, e As EventArgs) Handles cmdDataSave.Click
-        SaveData()
-    End Sub
-
-    Private Sub Btnloadcmd_Click(sender As Object, e As EventArgs) Handles btnloadcmd.Click
-        LoadData()
     End Sub
 
     Private Sub Testserial_Click(sender As Object, e As EventArgs) Handles testserial.Click
@@ -495,7 +461,7 @@ Error2:
                                            FORMAT_Count += 1
                                            Me.Invoke(Sub() linecounter.Text = FORMAT_Count.ToString())
                                            Me.Invoke(Sub() LabelLv.Text = objProbe.Lv.ToString("##0.00"))
-                                           Me.Invoke(Sub() SetCMDData(i))
+                                           Me.Invoke(Sub() SetData(i))
                                            Application.DoEvents()
                                            If isMsr = False Then
                                                Exit For

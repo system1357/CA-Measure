@@ -1,0 +1,14 @@
+C:\Users\JZ\source\repos\CA-Measure\CA-Measure\bin\Release\CA-Measure.exe.config
+C:\Users\JZ\source\repos\CA-Measure\CA-Measure\bin\Release\CA-Measure.exe
+C:\Users\JZ\source\repos\CA-Measure\CA-Measure\bin\Release\CA-Measure.pdb
+C:\Users\JZ\source\repos\CA-Measure\CA-Measure\bin\Release\CA-Measure.xml
+C:\Users\JZ\source\repos\CA-Measure\CA-Measure\obj\Release\CA-Measure.vbproj.AssemblyReference.cache
+C:\Users\JZ\source\repos\CA-Measure\CA-Measure\obj\Release\Interop.CA200SRVRLib.dll
+C:\Users\JZ\source\repos\CA-Measure\CA-Measure\obj\Release\CA-Measure.vbproj.ResolveComReference.cache
+C:\Users\JZ\source\repos\CA-Measure\CA-Measure\obj\Release\CA_Measure.Main.resources
+C:\Users\JZ\source\repos\CA-Measure\CA-Measure\obj\Release\CA_Measure.Resources.resources
+C:\Users\JZ\source\repos\CA-Measure\CA-Measure\obj\Release\CA-Measure.vbproj.GenerateResource.cache
+C:\Users\JZ\source\repos\CA-Measure\CA-Measure\obj\Release\CA-Measure.vbproj.CoreCompileInputs.cache
+C:\Users\JZ\source\repos\CA-Measure\CA-Measure\obj\Release\CA-Measure.exe
+C:\Users\JZ\source\repos\CA-Measure\CA-Measure\obj\Release\CA-Measure.xml
+C:\Users\JZ\source\repos\CA-Measure\CA-Measure\obj\Release\CA-Measure.pdb
